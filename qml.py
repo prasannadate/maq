@@ -203,7 +203,7 @@ def svmWeights(solutions, P, N, d):
 
 
 
-def kmeans2Qubo(X, k):
+def kmeans2Qubo(X, k, alpha=None, beta=None):
 	""" Converts a given k-means clustering problem into a QUBO problem
 
 	Args:
@@ -242,6 +242,65 @@ def kmeans2Qubo(X, k):
 		for j in range(N):
 			diff = X[i] - X[j]
 			D[i,j] = np.dot(diff, diff)
+
+
+	# Define alpha and beta
+	if not alpha:
+		alpha = max(D) / (2*(N/k) - 1)
+
+	if not beta:
+		beta = max(D)
+
+
+	# Create QUBO matrix and vector
+	Q = np.zeros([N*k, N*k])
+	p = np.zeros(N*k)
+
+	for i in range(N):
+		for j in range(N):
+			for m in range(k):
+				Q[N*i + m, N*j + m] += D[i,j] - beta
+
+
+	for i in range(N):
+		for m in range(k):
+			for n in range(k):
+				Q[N*i + m, N*i + n] += aplpa
+
+	for i in range(N):
+		for m in range(k):
+			p[N*i + m] += 2* (alpha + N*beta/k)
+
+
+	return Q, p
+
+
+
+
+def kmeansClusters(solutions, N, k):
+	""" Returns the clustering assignment for a given k-means problem
+
+	Args:
+		solutions (list): List of k-means solutions returned by the adiabatic quantum computer
+		N (int): Number of data points in the original problem
+		k (int): Number of clusters in the original problem
+
+	Returns:
+		assignmentsList: A list of assignments corresponding to each solution returned by the adiabatic quantum computer
+
+	"""
+
+	# Create the assignments list
+	assignmentsList = []
+
+
+	# Extract assignments from solutions
+	for solution in solutions:
+		assigment = solution.reshape(N, k)
+		assignmentsList.append(assignment)
+
+	return assignmentsList
+
 
 
 

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.utils &mdash; MAQ 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MAQ
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MAQ</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">os</span> 
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+
+
+<span class="c1"># ******************************************************************************</span>
+<span class="c1"># API Functions ****************************************************************</span>
+<span class="c1"># ******************************************************************************</span>
+
+
+<div class="viewcode-block" id="array2Dict"><a class="viewcode-back" href="../../src.html#src.utils.array2Dict">[docs]</a><span class="k">def</span> <span class="nf">array2Dict</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Converts numpy 1-dimensional array into dictionary.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		x (numpy array): Input array</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		d (dict): Dictionary with array indices as keys and array values as values.</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+		<span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">:</span>
+			<span class="n">d</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+	<span class="k">return</span> <span class="n">d</span></div>
+
+
+
+
+<div class="viewcode-block" id="embedChimeraIsing"><a class="viewcode-back" href="../../src.html#src.utils.embedChimeraIsing">[docs]</a><span class="k">def</span> <span class="nf">embedChimeraIsing</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">Lambda</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Generates embedding for an Ising problem characterized by Q and p for D-Wave Chimera hardware.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		Q (numpy array):</span>
+<span class="sd">		p (numpy array):</span>
+<span class="sd">		M (int):</span>
+<span class="sd">		N (int):</span>
+<span class="sd">		L (int):</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		J (dict):</span>
+<span class="sd">		h (dict):</span>
+
+<span class="sd">	Raises:</span>
+<span class="sd">		TypeError: If M, N or L are not integers</span>
+<span class="sd">		ValueError: If Lambda is given and not positive</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;M&#39; must be an integer&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;N&#39; must be an integer&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;L&#39; must be an integer&quot;</span><span class="p">)</span>
+
+	<span class="n">maximum</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+	<span class="k">if</span> <span class="n">Lambda</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">Lambda</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;Lambda&#39; must be a large positive integer&quot;</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">Lambda</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">p</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">*</span> <span class="mi">1000</span>
+
+	<span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+	<span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+	<span class="c1"># Normalize</span>
+	<span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+		<span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">maximum</span>
+		<span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">/</span> <span class="n">maximum</span>
+
+	<span class="n">Q</span> <span class="o">=</span> <span class="n">_makeUpperTriangular</span><span class="p">(</span><span class="n">_zeroDiagonal</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
+
+	<span class="n">J</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">qubitFootprint</span> <span class="o">=</span> <span class="n">_computeEmbeddings</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">Lambda</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">J</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">qubitFootprint</span></div>
+
+
+
+
+<div class="viewcode-block" id="embedChimeraQubo"><a class="viewcode-back" href="../../src.html#src.utils.embedChimeraQubo">[docs]</a><span class="k">def</span> <span class="nf">embedChimeraQubo</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">Lambda</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Generates embedding for an Ising problem characterized by Q and p for D-Wave Chimera hardware.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		Q (numpy array):</span>
+<span class="sd">		p (numpy array):</span>
+<span class="sd">		M (int):</span>
+<span class="sd">		N (int):</span>
+<span class="sd">		L (int):</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		J (dict):</span>
+<span class="sd">		h (dict):</span>
+
+<span class="sd">	Raises:</span>
+<span class="sd">		TypeError: If M, N or L are not integers</span>
+<span class="sd">		ValueError: If Lambda is given and not positive</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;M&#39; must be an integer&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;N&#39; must be an integer&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;L&#39; must be an integer&quot;</span><span class="p">)</span>
+
+	<span class="n">maximum</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+	<span class="k">if</span> <span class="n">Lambda</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">Lambda</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;Lambda&#39; must be a large positive integer&quot;</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">Lambda</span> <span class="o">=</span> <span class="n">maximum</span> <span class="o">*</span> <span class="mf">8.0</span>
+
+	<span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+	<span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+	<span class="c1"># Normalize</span>
+	<span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+		<span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">/</span> <span class="n">maximum</span>
+		<span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">/</span> <span class="n">maximum</span>
+
+	<span class="c1"># Transfer diagonal elements of Q to p</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+		<span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+		<span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+	<span class="n">Q</span> <span class="o">=</span> <span class="n">_makeUpperTriangular</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+
+	<span class="n">J</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">qubitFootprint</span> <span class="o">=</span> <span class="n">_computeEmbeddings</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">Lambda</span><span class="p">)</span>
+
+	<span class="n">h</span> <span class="o">=</span> <span class="n">array2Dict</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+	<span class="n">J</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+
+	<span class="c1"># Correct h for QUBO embeddings</span>
+	<span class="k">for</span> <span class="n">qubitSet</span> <span class="ow">in</span> <span class="n">embeddings</span><span class="p">:</span>
+		<span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">qubitSet</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">qubit</span> <span class="ow">in</span> <span class="n">qubitSet</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">qubit</span><span class="p">,</span> <span class="n">qubit</span><span class="p">)</span> <span class="ow">in</span> <span class="n">J</span><span class="p">:</span>
+				<span class="n">J</span><span class="p">[(</span><span class="n">qubit</span><span class="p">,</span> <span class="n">qubit</span><span class="p">)]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">Lambda</span> <span class="o">/</span> <span class="n">length</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">J</span><span class="p">[(</span><span class="n">qubit</span><span class="p">,</span> <span class="n">qubit</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">Lambda</span> <span class="o">/</span> <span class="n">length</span>
+
+	<span class="k">return</span> <span class="n">J</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">qubitFootprint</span></div>
+
+
+
+
+<div class="viewcode-block" id="postProcessing"><a class="viewcode-back" href="../../src.html#src.utils.postProcessing">[docs]</a><span class="k">def</span> <span class="nf">postProcessing</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Post-process the response obtained from D-Wave.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		response: response object returned by D-Wave Ocean API</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		results: List of (solution, energy, number of occurrences) tuples</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="n">optimalValue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> 
+	<span class="n">optimalSolution</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">optimalSolutionSet</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+	<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">embeddings</span><span class="p">])</span>
+	<span class="k">for</span> <span class="n">sample</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">():</span>
+		<span class="n">solution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">])</span>
+		<span class="n">solutionTuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+
+		<span class="n">value</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span> <span class="o">@</span> <span class="n">solution</span> <span class="o">+</span> <span class="n">solution</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">b</span>
+		<span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">optimalValue</span><span class="p">:</span>
+			<span class="n">optimalValue</span> <span class="o">=</span> <span class="n">value</span>
+			<span class="n">optimalSolution</span> <span class="o">=</span> <span class="p">[</span><span class="n">solution</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
+			<span class="n">optimalSolutionSet</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">solutionTuple</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="n">optimalValue</span> <span class="ow">and</span> <span class="n">solutionTuple</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">optimalSolutionSet</span><span class="p">:</span>
+			<span class="n">optimalSolution</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+			<span class="n">optimalSolutionSet</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">solution</span><span class="p">))</span>
+
+	<span class="k">return</span> <span class="n">optimalValue</span><span class="p">,</span> <span class="n">optimalSolution</span></div>
+
+
+
+
+<span class="c1"># ******************************************************************************</span>
+<span class="c1"># Helper Functions *************************************************************</span>
+<span class="c1"># ******************************************************************************</span>
+
+
+<span class="k">def</span> <span class="nf">_baseQubit</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Compute index of the base qubit corresponding to input variable i.</span>
+
+<span class="sd">	Helper function to _compute_embeddings().</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		M: Number of rows in hardware Graph</span>
+<span class="sd">		N: Number of columns in hardware Graph</span>
+<span class="sd">		L: Number of qubits along a line in a single hardware block</span>
+<span class="sd">		i: Index of input variable being evaluated</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		Base qubit corresponding to input variable i.</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+	
+	<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">L</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span> <span class="o">%</span> <span class="n">L</span><span class="p">)</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">_computeCouplings</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Compute the couplings.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		M: Number of rows of Chimera hardware architecture</span>
+<span class="sd">		N: Number of columns of Chimera hardware architecture</span>
+<span class="sd">		L: Number of qubits along a line in a single Chimera hardware block</span>
+<span class="sd">		V: Number of input variables</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		couplings: Dictionary mapping variables (keys) to qubits (values)</span>
+
+<span class="sd">	Raises:</span>
+<span class="sd">		RuntimeError: If cannot accommodate V variables on M X N X L hardware graph</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="n">couplings</span> <span class="o">=</span> <span class="p">{}</span>
+
+	<span class="k">if</span> <span class="n">V</span> <span class="o">&lt;=</span> <span class="nb">min</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">L</span><span class="p">:</span>
+		<span class="n">vStep</span> <span class="o">=</span> <span class="n">_verticalStep</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+		<span class="n">hStep</span> <span class="o">=</span> <span class="n">_horizontalStep</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">V</span><span class="p">)):</span>
+			<span class="n">startQubit</span> <span class="o">=</span> <span class="n">_startQubit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+			<span class="n">baseQubit</span> <span class="o">=</span> <span class="n">_baseQubit</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+			<span class="n">endQubit</span> <span class="o">=</span> <span class="n">_endQubit</span><span class="p">(</span><span class="n">baseQubit</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+			<span class="c1"># Special case: If V % L = 1, and dealing with last qubit, only need &quot;vertical couplings&quot;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">V</span> <span class="o">%</span> <span class="n">L</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">V</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+				<span class="n">couplings</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">startQubit</span><span class="p">,</span> <span class="n">baseQubit</span><span class="p">,</span> <span class="n">vStep</span><span class="p">))</span>
+			
+			<span class="c1"># General case: For all other coupled qubits</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">couplings</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">startQubit</span><span class="p">,</span> <span class="n">baseQubit</span><span class="p">,</span> <span class="n">vStep</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="n">baseQubit</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">baseQubit</span> <span class="o">+</span> <span class="n">L</span><span class="p">),</span> <span class="n">endQubit</span><span class="p">,</span> <span class="n">hStep</span><span class="p">))</span>
+
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Can not embed </span><span class="si">%d</span><span class="s2"> variables on </span><span class="si">%d</span><span class="s2"> X </span><span class="si">%d</span><span class="s2"> X </span><span class="si">%d</span><span class="s2"> hardware graph&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">))</span>
+
+	<span class="k">return</span> <span class="n">couplings</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">_computeEmbeddings</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">Lambda</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Computes the complete embeddings required to embed a QUBO / Ising problem onto hardware graph.</span>
+<span class="sd">	</span>
+<span class="sd">	First creates a dictionary of all the qubits that will be coupled to an original variable of the problem.</span>
+<span class="sd">	Then, sets the inter-qubit coupling strengths as per input matrix Q.</span>
+<span class="sd">	</span>
+<span class="sd">	Args:</span>
+<span class="sd">		Q: QUBO / Ising matrix (should be upper triangular with zeroes on the main diagonal)</span>
+<span class="sd">		p: QUBO / Ising vector</span>
+<span class="sd">		M: Number of rows in Chimera hardware graph</span>
+<span class="sd">		N: Number of columns in Chimera hardware graph</span>
+<span class="sd">		L: Number of qubits along a line in a single hardware block</span>
+<span class="sd">		Lambda: Penalty value (large positive number)</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		J: Dictionary of inter-qubit connections (keys) along with their coupling strength (values)</span>
+<span class="sd">		h: Qubit biases</span>
+<span class="sd">		embeddings: List containing lists of qubits mapped to a particular qubit</span>
+<span class="sd">		qubitFootprint: Total number of qubits used</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="c1"># Define the variables to be computed</span>
+	<span class="n">V</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="n">qubitFootprint</span> <span class="o">=</span> <span class="n">_qubitFootprint</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">V</span> <span class="o">&lt;=</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">V</span> <span class="o">+</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">V</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">L</span><span class="p">))</span> <span class="o">+</span> <span class="n">V</span><span class="o">%</span><span class="n">L</span><span class="p">))</span>
+	<span class="n">J</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="n">embeddings</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">numCoupledQubits</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+	<span class="c1"># If problem fits on a single block of Chimera hardware graph</span>
+	<span class="k">if</span> <span class="n">V</span> <span class="o">&lt;=</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">V</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">({},</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]),</span> <span class="p">[],</span> <span class="n">qubitFootprint</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">V</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">({},</span> <span class="n">p</span><span class="p">,</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">qubitFootprint</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">V</span><span class="p">):</span>
+				<span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">V</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+					<span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">])</span>
+
+				<span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">V</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+					<span class="n">h</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+				
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">h</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+					<span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+						<span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">Lambda</span>
+						<span class="n">embeddings</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+						<span class="n">numCoupledQubits</span> <span class="o">+=</span> <span class="mi">1</span>
+				
+				<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">L</span><span class="p">,</span> <span class="n">L</span><span class="o">+</span><span class="n">V</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+					<span class="n">J</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="n">L</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+
+			<span class="k">return</span> <span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">qubitFootprint</span><span class="p">)</span>
+
+
+	<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;./embeddings/</span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">.pkl&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">V</span><span class="p">)):</span>
+		<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./embeddings/</span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">.pkl&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">V</span><span class="p">),</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+			<span class="n">couplings</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">couplings</span> <span class="o">=</span> <span class="n">_computeCouplings</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+
+
+	<span class="c1"># Compute embeddings</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">V</span><span class="p">):</span>
+		<span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">couplings</span><span class="p">[</span><span class="n">i</span><span class="p">][:])</span>
+
+
+	<span class="c1"># Set the qubit weight vector h</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">V</span><span class="p">)):</span>
+		<span class="n">h</span><span class="p">[</span><span class="n">_startQubit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">L</span><span class="p">)]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+
+	<span class="c1"># Set the coupled inter-qubit strengths</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">couplings</span><span class="p">:</span>
+		<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">couplings</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+			<span class="n">J</span><span class="p">[(</span><span class="n">couplings</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">couplings</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])]</span> <span class="o">=</span> <span class="o">-</span><span class="n">Lambda</span>
+			<span class="n">numCoupledQubits</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+	<span class="c1"># Set the non-coupled inter-qubit strengths</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">V</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">L</span><span class="p">)):</span>
+		<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">V</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">L</span><span class="p">)):</span>
+			<span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+				<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">))):</span>
+					<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">))):</span>
+						<span class="n">J</span><span class="p">[(</span><span class="n">couplings</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">couplings</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]</span>
+
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">))):</span>
+					<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">))):</span>
+						<span class="n">J</span><span class="p">[(</span><span class="n">couplings</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">couplings</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]</span>
+
+			<span class="c1"># Pop completed qubits from couplings</span>
+			<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">))):</span>
+				<span class="k">if</span> <span class="n">couplings</span><span class="p">[</span><span class="n">s</span><span class="p">]:</span>
+					<span class="n">couplings</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+			<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">))):</span>
+				<span class="k">if</span> <span class="n">couplings</span><span class="p">[</span><span class="n">t</span><span class="p">]:</span>
+					<span class="n">couplings</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">J</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">qubitFootprint</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">_decode</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Decodes the sample returned by D-Wave</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		sample: A sample returned by D-Wave</span>
+<span class="sd">		indices: Indices of base qubits for Ising / QUBO variables</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		solution: Decoded solution</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="n">solution</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+		<span class="n">solution</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+
+	<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">_endQubit</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Compute the index of final qubit that would be coupled to input variable i.</span>
+
+<span class="sd">	Helper function to _compute_embeddings().</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		L: Number of qubits along a line in a single hardware block</span>
+<span class="sd">		V: Number of input variables</span>
+<span class="sd">		i: Index of input variable being evaluated</span>
+<span class="sd">	</span>
+<span class="sd">	Returns:</span>
+<span class="sd">		Index of the final qubit that would be coupled to input variable i.</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">base</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">L</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">V</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">L</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="n">L</span><span class="p">)))</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">_horizontalStep</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Compute number of qubits that need to be skipped for horizontal coupling.</span>
+
+<span class="sd">	Helper function to _compute_embeddings().</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		L: Number of qubits along a line in a single hardware block</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		Step size for howizontal coupling.</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">L</span><span class="p">)</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">_makeUpperTriangular</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Makes the matrix Q upper triangular by adding entries from lower triangular part into the upper triangular part.</span>
+<span class="sd">		</span>
+<span class="sd">	Args:</span>
+<span class="sd">		Q: The input matrix.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		Q: The upper triangular matrix Q[i,j] = Q[i,j] + Q[j,i], for all i &lt; j</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+		<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+			<span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+			<span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+	<span class="k">return</span> <span class="n">Q</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">_qubitFootprint</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">V</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Computes total number of qubits required to embed V QUBO variables onto hardware Graph defined by M, N and L.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		M: Number of rows in Chimera hardware graph</span>
+<span class="sd">		N: Number of columns in Chimera hardware graph</span>
+<span class="sd">		L: Number of qubits along a line in a single Chimera hardware block</span>
+<span class="sd">		V: Number of input variables</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		Number of qubits required if V is smaller than L * min(M, N), otherwise returns None.</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="c1"># Handle the base case for single hardware block</span>
+	<span class="k">if</span> <span class="n">V</span> <span class="o">&lt;=</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">V</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">V</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">V</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">V</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+	<span class="k">if</span> <span class="n">V</span> <span class="o">&lt;=</span> <span class="n">L</span> <span class="o">*</span> <span class="nb">min</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">V</span> <span class="o">%</span> <span class="n">L</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">L</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">V</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">V</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+		<span class="k">elif</span> <span class="n">V</span> <span class="o">%</span> <span class="n">L</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">L</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">V</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">V</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">L</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">V</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">V</span> <span class="o">%</span> <span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">V</span><span class="o">/</span><span class="n">L</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">L</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">V</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">V</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">L</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">V</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">V</span> <span class="o">%</span> <span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">V</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">V</span> <span class="o">%</span> <span class="n">L</span><span class="p">))</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">return</span> <span class="kc">None</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">_startQubit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Compute the smallest hardware Graph index of the qubit that is mapped to given variable i.</span>
+
+<span class="sd">	Helper function to _compute_embeddings().</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		i: Index of input variable being evaluated</span>
+<span class="sd">		L: Number of qubits along a line in a single hardware block</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		Smallest qubit index corresponding to input varible i.</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">L</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="n">L</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span> <span class="o">%</span> <span class="n">L</span><span class="p">)</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">_verticalStep</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Compute number of qubits that need to be skipped for vertical coupling.</span>
+
+<span class="sd">	Helper function to _compute_embeddings().</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		M: Number of rows in hardware Graph</span>
+<span class="sd">		N: Number of columns in hardware Graph</span>
+<span class="sd">		L: Number of qubits along a line in a single hardware block</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		Step size for vertical coupling.</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span>  <span class="n">L</span> <span class="o">*</span> <span class="nb">min</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">_zeroDiagonal</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Sets diagonal elements to zero.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			Q: The input matrix Q.</span>
+<span class="sd">		</span>
+<span class="sd">		Returns:</span>
+<span class="sd">			Q: Q is the input square matrix whose diagonal has been zeroed out.</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+		<span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+	<span class="k">return</span> <span class="n">Q</span>
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Prasanna Date, Kathleen Hamilton, Robert Patton, Travis Humble, Thomas Potok.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

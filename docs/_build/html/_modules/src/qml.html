@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.qml &mdash; MAQ 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MAQ
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MAQ</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.qml</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.qml</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+
+
+<span class="c1"># ******************************************************************************</span>
+<span class="c1"># API Functions ****************************************************************</span>
+<span class="c1"># ******************************************************************************</span>
+
+
+<div class="viewcode-block" id="regression2Qubo"><a class="viewcode-back" href="../../src.html#src.qml.regression2Qubo">[docs]</a><span class="k">def</span> <span class="nf">regression2Qubo</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Converts a given regression problem into QUBO problem</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		X (numpy array): Augmented training data having N datapoints and (d+1) features, i.e. d features augmented by unity</span>
+<span class="sd">		Y (numpy array): Training labels for regression, N dimensional vector</span>
+<span class="sd">		P (numpy array): Precision vector, must be sorted, can contain positive and negative powers of 2</span>
+<span class="sd">	</span>
+<span class="sd">	Returns:</span>
+<span class="sd">		Q (numpy array): QUBO matrix</span>
+<span class="sd">		p (numpy array): QUBO vector</span>
+
+<span class="sd">	Raises:</span>
+<span class="sd">		TypeError: If X, Y or P are not numpy arrays</span>
+<span class="sd">		ValueError: </span>
+<span class="sd">			1. If shape of X is not [N,d] </span>
+<span class="sd">			2. If shape of Y is not [N]</span>
+<span class="sd">			3. If first dimensions of X and Y are not equal</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;X must be numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Y must be numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;P must be numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;X must be a 2-dimensional (Nxd) numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Y must be a 1-dimensional numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;First dimensions of X and Y must be equal&quot;</span><span class="p">)</span>
+
+
+	<span class="c1"># Get N, d, K</span>
+	<span class="n">N</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+	<span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+
+
+	<span class="c1"># Compute precision matrix</span>
+	<span class="n">precisionMatrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,jl&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">P</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="n">d</span><span class="p">,</span> <span class="n">K</span><span class="o">*</span><span class="n">d</span><span class="p">])</span>
+
+
+	<span class="c1"># Conversion</span>
+	<span class="n">Q</span> <span class="o">=</span> <span class="n">precisionMatrix</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span> <span class="o">@</span> <span class="n">precisionMatrix</span>
+	<span class="n">p</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">precisionMatrix</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Y</span>
+
+
+	<span class="k">return</span> <span class="n">Q</span><span class="p">,</span> <span class="n">p</span></div>
+
+
+
+
+<div class="viewcode-block" id="regressionWeights"><a class="viewcode-back" href="../../src.html#src.qml.regressionWeights">[docs]</a><span class="k">def</span> <span class="nf">regressionWeights</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Finds regression weights from binarized regression weights</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		solutions: List of binarized regression weight vector</span>
+<span class="sd">		P: Precision vector</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		w: List of real valued regression weights</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="n">weights</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+
+	<span class="k">for</span> <span class="n">wHat</span> <span class="ow">in</span> <span class="n">solutions</span><span class="p">:</span>
+		<span class="n">WHat</span> <span class="o">=</span> <span class="n">wHat</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="p">])</span>
+		<span class="n">w</span> <span class="o">=</span> <span class="n">WHat</span> <span class="o">@</span> <span class="n">P</span>
+		<span class="n">weights</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">weights</span></div>
+
+
+
+
+<div class="viewcode-block" id="svm2Qubo"><a class="viewcode-back" href="../../src.html#src.qml.svm2Qubo">[docs]</a><span class="k">def</span> <span class="nf">svm2Qubo</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Converts a given SVM problem into QUBO problem</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		X (numpy array): Training data having N datapoints and d features</span>
+<span class="sd">		Y (numpy array): Training labels for binary classification</span>
+<span class="sd">		P (numpy array): Precision vector, must be sorted, can contain positive and negative powers of 2</span>
+<span class="sd">	</span>
+<span class="sd">	Returns:</span>
+<span class="sd">		Q (numpy array): QUBO matrix</span>
+<span class="sd">		p (numpy array): QUBO vector</span>
+
+<span class="sd">	Raises:</span>
+<span class="sd">		TypeError: If X, Y or P are not numpy arrays</span>
+<span class="sd">		ValueError: </span>
+<span class="sd">			1. If shape of X is not [N,d] </span>
+<span class="sd">			2. If shape of Y is not [N]</span>
+<span class="sd">			3. If first dimensions of X and Y are not equal</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;X must be numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Y must be numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;P must be numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;X must be a 2-dimensional (Nxd) numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Y must be a 1-dimensional numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;First dimensions of X and Y must be equal&quot;</span><span class="p">)</span>
+
+
+	<span class="c1"># Get N, d, K</span>
+	<span class="n">N</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+	<span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+
+
+	<span class="c1"># Find index of smallest positive element in P</span>
+	<span class="n">kplus</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">P</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">break</span>
+		<span class="n">kplus</span> <span class="o">+=</span> <span class="mi">1</span>
+	<span class="n">Pplus</span> <span class="o">=</span> <span class="n">P</span><span class="p">[</span><span class="n">kplus</span><span class="p">:]</span>
+	<span class="n">Kplus</span> <span class="o">=</span> <span class="n">K</span> <span class="o">-</span> <span class="n">kplus</span>
+
+
+	<span class="c1"># Compute outer product of P and Pplus</span>
+	<span class="n">outerPlus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Pplus</span><span class="p">)</span>
+
+
+	<span class="c1"># Computing QUBO matrix Q</span>
+	<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">K</span><span class="o">*</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">Kplus</span><span class="o">*</span><span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="o">*</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">Kplus</span><span class="o">*</span><span class="n">N</span><span class="p">])</span>
+	<span class="n">Q</span><span class="p">[:</span><span class="n">K</span><span class="o">*</span><span class="n">d</span><span class="p">,</span> <span class="p">:</span><span class="n">K</span><span class="o">*</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,jl&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">P</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">K</span><span class="o">*</span><span class="n">d</span><span class="p">,</span> <span class="n">K</span><span class="o">*</span><span class="n">d</span><span class="p">))</span>
+	<span class="n">Q</span><span class="p">[:</span><span class="n">K</span><span class="o">*</span><span class="n">d</span><span class="p">,</span> <span class="n">K</span><span class="o">*</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">):]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,jl&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">outerPlus</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">K</span><span class="o">*</span><span class="n">d</span><span class="p">,</span> <span class="n">Kplus</span><span class="o">*</span><span class="n">N</span><span class="p">))</span>
+	<span class="n">Q</span><span class="p">[</span><span class="n">K</span><span class="o">*</span><span class="n">d</span><span class="p">:</span><span class="n">K</span><span class="o">*</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">K</span><span class="o">*</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">):]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ik,jl&quot;</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="n">outerPlus</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">K</span><span class="p">,</span> <span class="n">Kplus</span><span class="o">*</span><span class="n">N</span><span class="p">))</span>
+
+
+	<span class="c1"># Computing QUBO vector p</span>
+	<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">K</span><span class="o">*</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)),</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">Kplus</span><span class="p">)))</span>
+
+	<span class="k">return</span> <span class="n">Q</span><span class="p">,</span> <span class="n">p</span></div>
+
+
+
+
+<div class="viewcode-block" id="svmWeights"><a class="viewcode-back" href="../../src.html#src.qml.svmWeights">[docs]</a><span class="k">def</span> <span class="nf">svmWeights</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Finds SVM weights from binarized SVM weights</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		solutions: List of binarized SVM solutions (weights, biases and Lagrangian multipliers)</span>
+<span class="sd">		P: Precision vector</span>
+<span class="sd">		N: Size of training dataset</span>
+<span class="sd">		d: Number of features in training dataset</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		weightsList: List of real valued SVM weights</span>
+<span class="sd">		biasList: List of real valued SVM bias</span>
+<span class="sd">		lambdas: List of real valued SVM Lagrangian multipliers</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="c1"># Initialize weights, biases and lambdas</span>
+	<span class="n">weightsList</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">biasList</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">lambdasList</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+	<span class="c1"># Find Pplus, Kplus and kplus</span>
+	<span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+	<span class="n">kplus</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">P</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">break</span>
+		<span class="n">kplus</span> <span class="o">+=</span> <span class="mi">1</span>
+	<span class="n">Pplus</span> <span class="o">=</span> <span class="n">P</span><span class="p">[</span><span class="n">kplus</span><span class="p">:]</span>
+	<span class="n">Kplus</span> <span class="o">=</span> <span class="n">K</span> <span class="o">-</span> <span class="n">kplus</span> 
+
+
+	<span class="c1"># For each solution, find the weights, biases and lambdas</span>
+	<span class="k">for</span> <span class="n">solution</span> <span class="ow">in</span> <span class="n">solutions</span><span class="p">:</span>
+		<span class="n">weightsAndBias</span> <span class="o">=</span> <span class="n">solution</span><span class="p">[:</span><span class="n">K</span><span class="o">*</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="p">])</span> <span class="o">@</span> <span class="n">P</span>
+		<span class="n">lambdas</span> <span class="o">=</span> <span class="n">solution</span><span class="p">[</span><span class="n">K</span><span class="o">*</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">):]</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="n">N</span><span class="p">,</span> <span class="n">Kplus</span><span class="p">])</span> <span class="o">@</span> <span class="n">Pplus</span>
+		<span class="n">weightsList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weightsAndBias</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+		<span class="n">biasList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weightsAndBias</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+		<span class="n">lambdasList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)</span>
+
+
+	<span class="k">return</span> <span class="n">weightsList</span><span class="p">,</span> <span class="n">biasList</span><span class="p">,</span> <span class="n">lambdasList</span></div>
+
+
+
+
+<div class="viewcode-block" id="kmeans2Qubo"><a class="viewcode-back" href="../../src.html#src.qml.kmeans2Qubo">[docs]</a><span class="k">def</span> <span class="nf">kmeans2Qubo</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Converts a given k-means clustering problem into a QUBO problem</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		X (numpy array): Data matrix with N rows and d columns</span>
+<span class="sd">		k (numpy array): Number of clusters desired</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		Q (numpy array): QUBO matrix</span>
+<span class="sd">		p (numpy array): QUBO vector</span>
+
+<span class="sd">	Raises:</span>
+<span class="sd">		TypeError: </span>
+<span class="sd">			1. If X is not numpy array</span>
+<span class="sd">			2. If k is not an integer</span>
+<span class="sd">		ValueError: If shape of X is not [N, d]</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;X must be numpy array&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;k must be an integer&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;X must be a 2-dimensional (Nxd) numpy array&quot;</span><span class="p">)</span>
+
+
+	<span class="c1"># Define N and d</span>
+	<span class="n">N</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="n">d</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+
+	<span class="c1"># Create distance matrix</span>
+	<span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">])</span>
+
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+			<span class="n">diff</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+			<span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">diff</span><span class="p">)</span>
+
+
+	<span class="c1"># Define alpha and beta</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="n">alpha</span><span class="p">:</span>
+		<span class="n">alpha</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">D</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">N</span><span class="o">/</span><span class="n">k</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+	<span class="k">if</span> <span class="ow">not</span> <span class="n">beta</span><span class="p">:</span>
+		<span class="n">beta</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+
+
+	<span class="c1"># Create QUBO matrix and vector</span>
+	<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">N</span><span class="o">*</span><span class="n">k</span><span class="p">,</span> <span class="n">N</span><span class="o">*</span><span class="n">k</span><span class="p">])</span>
+	<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
+
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+			<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+				<span class="n">Q</span><span class="p">[</span><span class="n">N</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">N</span><span class="o">*</span><span class="n">j</span> <span class="o">+</span> <span class="n">m</span><span class="p">]</span> <span class="o">+=</span> <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">beta</span>
+
+
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+			<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+				<span class="n">Q</span><span class="p">[</span><span class="n">N</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">N</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="n">n</span><span class="p">]</span> <span class="o">+=</span> <span class="n">aplpa</span>
+
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+			<span class="n">p</span><span class="p">[</span><span class="n">N</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="n">m</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">N</span><span class="o">*</span><span class="n">beta</span><span class="o">/</span><span class="n">k</span><span class="p">)</span>
+
+
+	<span class="k">return</span> <span class="n">Q</span><span class="p">,</span> <span class="n">p</span></div>
+
+
+
+
+<div class="viewcode-block" id="kmeansClusters"><a class="viewcode-back" href="../../src.html#src.qml.kmeansClusters">[docs]</a><span class="k">def</span> <span class="nf">kmeansClusters</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot; Returns the clustering assignment for a given k-means problem</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		solutions (list): List of k-means solutions returned by the adiabatic quantum computer</span>
+<span class="sd">		N (int): Number of data points in the original problem</span>
+<span class="sd">		k (int): Number of clusters in the original problem</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		assignmentsList: A list of assignments corresponding to each solution returned by the adiabatic quantum computer</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="c1"># Create the assignments list</span>
+	<span class="n">assignmentsList</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+	<span class="c1"># Extract assignments from solutions</span>
+	<span class="k">for</span> <span class="n">solution</span> <span class="ow">in</span> <span class="n">solutions</span><span class="p">:</span>
+		<span class="n">assigment</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+		<span class="n">assignmentsList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">assignment</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">assignmentsList</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Prasanna Date, Kathleen Hamilton, Robert Patton, Travis Humble, Thomas Potok.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

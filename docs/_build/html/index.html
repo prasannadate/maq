@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to MAQ’s documentation! &mdash; MAQ 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            MAQ
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to MAQ’s documentation!</a></li>
+<li><a class="reference internal" href="#src-package">src package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-src.qml">src.qml module</a></li>
+<li><a class="reference internal" href="#module-src.utils">src.utils module</a></li>
+<li><a class="reference internal" href="#module-src">Module contents</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">MAQ</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to MAQ’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-maq-s-documentation">
+<h1>Welcome to MAQ’s documentation!<a class="headerlink" href="#welcome-to-maq-s-documentation" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="src-package">
+<h1>src package<a class="headerlink" href="#src-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-src.qml">
+<span id="src-qml-module"></span><h2>src.qml module<a class="headerlink" href="#module-src.qml" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.qml.kmeans2Qubo">
+<span class="sig-prename descclassname"><span class="pre">src.qml.</span></span><span class="sig-name descname"><span class="pre">kmeans2Qubo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/qml.html#kmeans2Qubo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.qml.kmeans2Qubo" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a given k-means clustering problem into a QUBO problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – Data matrix with N rows and d columns</p></li>
+<li><p><strong>k</strong> (<em>numpy array</em>) – Number of clusters desired</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>QUBO matrix
+p (numpy array): QUBO vector</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Q (numpy array)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – <ol class="arabic simple">
+<li><p>If X is not numpy array
+    2. If k is not an integer</p></li>
+</ol>
+</p></li>
+<li><p><strong>ValueError</strong> – If shape of X is not [N, d]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.qml.kmeansClusters">
+<span class="sig-prename descclassname"><span class="pre">src.qml.</span></span><span class="sig-name descname"><span class="pre">kmeansClusters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solutions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/qml.html#kmeansClusters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.qml.kmeansClusters" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the clustering assignment for a given k-means problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>solutions</strong> (<em>list</em>) – List of k-means solutions returned by the adiabatic quantum computer</p></li>
+<li><p><strong>N</strong> (<em>int</em>) – Number of data points in the original problem</p></li>
+<li><p><strong>k</strong> (<em>int</em>) – Number of clusters in the original problem</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of assignments corresponding to each solution returned by the adiabatic quantum computer</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>assignmentsList</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.qml.regression2Qubo">
+<span class="sig-prename descclassname"><span class="pre">src.qml.</span></span><span class="sig-name descname"><span class="pre">regression2Qubo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/qml.html#regression2Qubo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.qml.regression2Qubo" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a given regression problem into QUBO problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – Augmented training data having N datapoints and (d+1) features, i.e. d features augmented by unity</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – Training labels for regression, N dimensional vector</p></li>
+<li><p><strong>P</strong> (<em>numpy array</em>) – Precision vector, must be sorted, can contain positive and negative powers of 2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>QUBO matrix
+p (numpy array): QUBO vector</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Q (numpy array)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If X, Y or P are not numpy arrays</p></li>
+<li><p><strong>ValueError</strong> – <ol class="arabic simple">
+<li><p>If shape of X is not [N,d]
+    2. If shape of Y is not [N]
+    3. If first dimensions of X and Y are not equal</p></li>
+</ol>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.qml.regressionWeights">
+<span class="sig-prename descclassname"><span class="pre">src.qml.</span></span><span class="sig-name descname"><span class="pre">regressionWeights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solutions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/qml.html#regressionWeights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.qml.regressionWeights" title="Permalink to this definition"></a></dt>
+<dd><p>Finds regression weights from binarized regression weights</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>solutions</strong> – List of binarized regression weight vector</p></li>
+<li><p><strong>P</strong> – Precision vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of real valued regression weights</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>w</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.qml.svm2Qubo">
+<span class="sig-prename descclassname"><span class="pre">src.qml.</span></span><span class="sig-name descname"><span class="pre">svm2Qubo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/qml.html#svm2Qubo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.qml.svm2Qubo" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a given SVM problem into QUBO problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – Training data having N datapoints and d features</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – Training labels for binary classification</p></li>
+<li><p><strong>P</strong> (<em>numpy array</em>) – Precision vector, must be sorted, can contain positive and negative powers of 2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>QUBO matrix
+p (numpy array): QUBO vector</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Q (numpy array)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If X, Y or P are not numpy arrays</p></li>
+<li><p><strong>ValueError</strong> – <ol class="arabic simple">
+<li><p>If shape of X is not [N,d]
+    2. If shape of Y is not [N]
+    3. If first dimensions of X and Y are not equal</p></li>
+</ol>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.qml.svmWeights">
+<span class="sig-prename descclassname"><span class="pre">src.qml.</span></span><span class="sig-name descname"><span class="pre">svmWeights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solutions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/qml.html#svmWeights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.qml.svmWeights" title="Permalink to this definition"></a></dt>
+<dd><p>Finds SVM weights from binarized SVM weights</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>solutions</strong> – List of binarized SVM solutions (weights, biases and Lagrangian multipliers)</p></li>
+<li><p><strong>P</strong> – Precision vector</p></li>
+<li><p><strong>N</strong> – Size of training dataset</p></li>
+<li><p><strong>d</strong> – Number of features in training dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of real valued SVM weights
+biasList: List of real valued SVM bias
+lambdas: List of real valued SVM Lagrangian multipliers</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>weightsList</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.utils">
+<span id="src-utils-module"></span><h2>src.utils module<a class="headerlink" href="#module-src.utils" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.array2Dict">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">array2Dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#array2Dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.array2Dict" title="Permalink to this definition"></a></dt>
+<dd><p>Converts numpy 1-dimensional array into dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy array</em>) – Input array</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary with array indices as keys and array values as values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>d (dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.embedChimeraIsing">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">embedChimeraIsing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Lambda</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#embedChimeraIsing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.embedChimeraIsing" title="Permalink to this definition"></a></dt>
+<dd><p>Generates embedding for an Ising problem characterized by Q and p for D-Wave Chimera hardware.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Q</strong> (<em>numpy array</em>) – </p></li>
+<li><p><strong>p</strong> (<em>numpy array</em>) – </p></li>
+<li><p><strong>M</strong> (<em>int</em>) – </p></li>
+<li><p><strong>N</strong> (<em>int</em>) – </p></li>
+<li><p><strong>L</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>h (dict):</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>J (dict)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If M, N or L are not integers</p></li>
+<li><p><strong>ValueError</strong> – If Lambda is given and not positive</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.embedChimeraQubo">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">embedChimeraQubo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Lambda</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#embedChimeraQubo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.embedChimeraQubo" title="Permalink to this definition"></a></dt>
+<dd><p>Generates embedding for an Ising problem characterized by Q and p for D-Wave Chimera hardware.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Q</strong> (<em>numpy array</em>) – </p></li>
+<li><p><strong>p</strong> (<em>numpy array</em>) – </p></li>
+<li><p><strong>M</strong> (<em>int</em>) – </p></li>
+<li><p><strong>N</strong> (<em>int</em>) – </p></li>
+<li><p><strong>L</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>h (dict):</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>J (dict)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If M, N or L are not integers</p></li>
+<li><p><strong>ValueError</strong> – If Lambda is given and not positive</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.postProcessing">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">postProcessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeddings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#postProcessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.postProcessing" title="Permalink to this definition"></a></dt>
+<dd><p>Post-process the response obtained from D-Wave.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>response</strong> – response object returned by D-Wave Ocean API</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of (solution, energy, number of occurrences) tuples</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>results</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Prasanna Date, Kathleen Hamilton, Robert Patton, Travis Humble, Thomas Potok.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

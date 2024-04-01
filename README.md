@@ -3,4 +3,4 @@ Machine Learning on Adiabatic Quantum Computers (MAQ) is a library of algorithms
 
 
 ## Documentation
-MAQ documentation is available on readthedocs.io: [https://maq.readthedocs.io/en/latest](https://maq.readthedocs.io/en/latest)
+MAQ documentation is available on readthedocs.io: [https://maq.readthedocs.io/](https://maq.readthedocs.io/en/latest)

@@ -1,14 +1,6 @@
 import numpy as np
 
 
-# TODO: 
-# 1. Metric matrix in the application
-# 2. Share application directory with Robert
-# 3. Request letter from D-Wave
-# 4. Write letter draft for letter from D-Wave
-# 5. Push current state of the repo with regression and svm stuff
-# 6. Work on the k-means clustering approach
-
 
 
 # ******************************************************************************

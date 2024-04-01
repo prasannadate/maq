@@ -16,7 +16,7 @@ import src.utils
 project = 'MAQ'
 copyright = '2024, Prasanna Date, Kathleen Hamilton, Robert Patton, Travis Humble, Thomas Potok'
 author = 'Prasanna Date, Kathleen Hamilton, Robert Patton, Travis Humble, Thomas Potok'
-release = '0.0.1'
+release = '0.2'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
